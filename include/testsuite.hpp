@@ -46,7 +46,7 @@ protected:
         return ok;
     }
 
-    // Поиск подстроки
+    // Find substring
     static bool has_substr(void* buffer, size_t bufsize, void* substr, size_t substrsize) {
     #ifdef __GNUG__ // If GNU extensions are present, use memmem
         return (memmem(buffer, bufsize, substr, substrsize) != NULL);
