@@ -11,7 +11,7 @@ struct Report {
 class TestSuite {
 protected:
     template<typename T>
-    static bool compare(T var, T ans) {
+    static bool compare(const T var, const T ans) {
         if(var != ans) {
             std::cout << "expected: " << ans << std::endl;
             std::cout << "got:      " << var << std::endl;
@@ -20,7 +20,28 @@ protected:
         return true;
     }
 
-    static bool compare(void *vvar, void *vans, size_t varlen, size_t anslen = 0) {
+    static bool compare(const char* var, const char* ans, bool compare_len) {
+        size_t varlen = strlen(var);
+        size_t anslen = strlen(ans);
+
+        if(varlen != anslen && compare_len) {
+            std::cout << "expected length " << anslen << ", "
+                      << "got " << varlen << std::endl;
+            return false;
+        }
+
+        size_t cnt = (compare_len) ? strlen(var) : strlen(ans);
+
+        if(strncmp(var, ans, cnt) != 0) {
+            std::cout << "expected: " << ans << std::endl;
+            std::cout << "got:      " << var << std::endl;
+            return false;
+        }
+
+        return true;
+    }
+
+    static bool compare(const void *vvar, const void *vans, size_t varlen, size_t anslen = 0) {
         char* var = (char*) vvar;
         char* ans = (char*) vans;
         if(!anslen) anslen = varlen;
@@ -58,7 +79,7 @@ protected:
     }
 
     #define INIT_TESTCASE               \
-            name = __PRETTY_FUNCTION__;  \
+            name = __FUNCTION__;  \
             int  _stnum = 0;              \
             bool _ok = true;               \
             bool _temp;
