@@ -148,9 +148,9 @@ protected:
 
 private:
     #ifndef __CC_ARM
-    static void print_array(char *array, uint length) {
+    static void print_array(char *array, size_t length) {
         std::cout << std::hex;
-        for(uint i = 0; i < length; i++) {
+        for(size_t i = 0; i < length; i++) {
             std::cout << (int)array[i] << " ";
         }
         std::cout << std::endl;
