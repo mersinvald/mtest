@@ -8,6 +8,14 @@ struct Report {
     uint32_t passed;
 };
 
+struct PReport {
+    uint32_t laps[64];
+    uint32_t overall;
+    uint32_t average[64];
+    uint32_t count;
+    uint32_t passed;
+};
+
 class TestSuite {
 protected:
     template<typename T>
